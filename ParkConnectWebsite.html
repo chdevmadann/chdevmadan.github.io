@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MRU Park Connect - Smart Campus Parking</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-primary: #1e3a5f;
+            --color-secondary: #3b82f6;
+            --color-accent: #60a5fa;
+            --color-text: #1f2937;
+            --color-text-light: #6b7280;
+            --color-bg: #f9fafb;
+            --color-surface: #ffffff;
+            --color-border: #e5e7eb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--color-bg);
+            color: var(--color-text);
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: var(--color-primary);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--color-accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .hero-logo {
+            max-width: 300px;
+            height: auto;
+            margin: 0 auto 2rem;
+            display: block;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.95;
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        /* Solution Section */
+        .solution-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .solution-section h2 {
+            color: var(--color-primary);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .solution-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .solution-section li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+
+        .solution-section li::before {
+            content: "•";
+            position: absolute;
+            left: 0.5rem;
+            color: var(--color-secondary);
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .step-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .step-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .step-card h3 {
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Search Section */
+        .search-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .search-section h2 {
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 0.875rem 1rem;
+            border: 2px solid var(--color-border);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--color-secondary);
+        }
+
+        .btn {
+            padding: 0.875rem 2rem;
+            background: var(--color-secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--color-primary);
+        }
+
+        .btn-secondary {
+            background: var(--color-text-light);
+        }
+
+        .btn-secondary:hover {
+            background: var(--color-text);
+        }
+
+        .search-result {
+            background: #f0f9ff;
+            border: 2px solid var(--color-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .result-label {
+            font-weight: 600;
+            color: var(--color-primary);
+        }
+
+        /* Registration Section */
+        .registration-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .registration-section h2 {
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .registration-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--color-text);
+        }
+
+        .success-message {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+            color: #065f46;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+        }
+
+        /* Admin Section */
+        .admin-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+        }
+
+        .admin-section h2 {
+            color: var(--color-primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .admin-login {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .vehicle-list {
+            margin-top: 2rem;
+        }
+
+        .vehicle-item {
+            background: var(--color-bg);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .vehicle-info {
+            flex: 1;
+        }
+
+        .vehicle-info strong {
+            color: var(--color-primary);
+        }
+
+        .btn-delete {
+            background: #ef4444;
+            padding: 0.5rem 1rem;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.875rem;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        .logout-btn {
+            margin-top: 1rem;
+            width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--color-primary);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .vehicle-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo-section">
+                <span class="logo-text">🚗 MRU Park Connect</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#search">Search Vehicle</a></li>
+                <li><a href="#register">Register</a></li>
+                <li><a href="#admin">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="image.jpeg" alt="Park Connect Logo" class="hero-logo">
+        <h1>Smart Campus Parking Solution</h1>
+        <p>Find vehicle owners instantly • Register your vehicle • Hassle-free parking</p>
+    </section>
+
+    <!-- Container -->
+    <div class="container">
+        <!-- Solution Section -->
+        <section class="solution-section">
+            <h2>Our proposed solution: MRU PARKCONNECT</h2>
+            <ul>
+                <li><strong>Our digital solution:</strong> Park Connect</li>
+                <li><strong>Visual:</strong> a website with simple search interface i.e (car number input box and a search button)</li>
+                <li>A simple secure and web based platform accessible to all registered MRU vehicle owners.</li>
+            </ul>
+        </section>
+
+        <!-- How It Works -->
+        <section>
+            <h2 style="text-align: center; color: var(--color-primary); margin-bottom: 2rem;">How it Works</h2>
+            <div class="how-it-works">
+                <div class="step-card">
+                    <div class="step-icon">🚨</div>
+                    <h3>Spot a Problem</h3>
+                    <p>A user finds a car blocking them (e.g., HR-51-AB-1234).</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">🔍</div>
+                    <h3>Search</h3>
+                    <p>They enter the car number on the MRU ParkConnect website.</p>
+                </div>
+                <div class="step-card">
+                    <div class="step-icon">📞</div>
+                    <h3>Contact</h3>
+                    <p>The system displays the registered owner's preferred contact details. i.e. name and phone number.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Search Section -->
+        <section id="search" class="search-section">
+            <h2>🔍 Search Vehicle Owner</h2>
+            <form class="search-form" onsubmit="searchVehicle(event)">
+                <input type="text" id="searchInput" class="form-input" placeholder="Enter vehicle number (e.g., HR-51-AB-1234)" required>
+                <button type="submit" class="btn">Search</button>
+            </form>
+            <div id="searchResult" class="hidden"></div>
+        </section>
+
+        <!-- Registration Section -->
+        <section id="register" class="registration-section">
+            <h2>📝 Register Your Vehicle</h2>
+            <form class="registration-form" onsubmit="registerVehicle(event)">
+                <div class="form-group">
+                    <label for="studentName">Student Name</label>
+                    <input type="text" id="studentName" class="form-input" required>
+                </div>
+                <div class="form-group">
+                    <label for="vehicleNumber">Vehicle Number</label>
+                    <input type="text" id="vehicleNumber" class="form-input" placeholder="e.g., HR-51-AB-1234" required>
+                </div>
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" class="form-input" placeholder="e.g., +91 9876543210" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Register Vehicle</button>
+            </form>
+            <div id="registrationMessage" class="hidden"></div>
+        </section>
+
+        <!-- Admin Section -->
+        <section id="admin" class="admin-section">
+            <h2>🔐 Owner Dashboard</h2>
+            <div id="adminLogin" class="admin-login">
+                <div class="form-group">
+                    <label for="adminPassword">Enter Password</label>
+                    <input type="password" id="adminPassword" class="form-input" placeholder="Enter admin password">
+                </div>
+                <button onclick="adminLogin()" class="btn" style="width: 100%;">Login</button>
+            </div>
+            <div id="adminDashboard" class="hidden">
+                <div class="vehicle-list" id="vehicleList"></div>
+                <button onclick="adminLogout()" class="btn btn-secondary logout-btn">Logout</button>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 MRU Park Connect. All rights reserved.</p>
+        <p>Manav Rachna University - Smart Campus Initiative</p>
+    </footer>
+
+    <script>
+        const OWNER_PASSWORD = 'admin123';
+        let isAdminLoggedIn = false;
+
+        // Initialize with sample data
+        function initializeData() {
+            if (!localStorage.getItem('vehicles')) {
+                const sampleVehicles = [
+                    { name: 'Rahul Kumar', vehicle: 'HR-51-AB-1234', phone: '+91 9876543210' },
+                    { name: 'Priya Sharma', vehicle: 'DL-
